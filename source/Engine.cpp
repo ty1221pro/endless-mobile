@@ -2283,12 +2283,7 @@ void Engine::HandleTouchEvents()
 				touchMoveVector = jspos / radius;
 				touchMoveActive = true;
 				HandleJoystickMovement(touchMoveVector * 32767);
-
-				// If we are outside the ring bounds, activate the afterburner
-				if(touchMoveVector.LengthSquared() > 1)
-					activeCommands |= Command::AFTERBURNER;
-
-				break; // only consider the first point we find
+				
 			}
 		}
 	}

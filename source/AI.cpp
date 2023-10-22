@@ -3030,7 +3030,7 @@ void AI::DoPatrol(Ship &ship, Command &command) const
 		// Hacky way of differentiating ship behaviour without additional storage,
 		// while keeping it consistent for each ship. TODO: change when Ship::SetTargetLocation exists.
 		// This uses the pointer of the ship to choose a pseudo-random angle and instructs it to
-		// partol the system in a criss-crossing pattern, where each turn is this specific angle.
+		// patrol the system in a criss-crossing pattern, where each turn is this specific angle.
 		intptr_t seed = reinterpret_cast<intptr_t>(&ship);
 		int behaviour = abs(seed % 23);
 		Angle delta = Angle(360. / (behaviour / 2. + 2.) * (behaviour % 2 ? -1. : 1.));
@@ -3703,6 +3703,8 @@ bool AI::TargetMinable(Ship &ship) const
 	auto UpdateBestMinable = MinableStrategy();
 	for(auto &&minable : minables)
 	{
+		if(GetDistanceMetric(*minable) > scanRangeMetric)
+			continue;
 		if(bestMinable)
 			UpdateBestMinable(minable);
 		else
@@ -4192,7 +4194,7 @@ void AI::MovePlayer(Ship &ship, const PlayerInfo &player, Command &activeCommand
 	if(Preferences::GetAutoFire() != Preferences::AutoFire::OFF && !ship.IsBoarding()
 			&& !(autoPilot | activeCommands).Has(Command::LAND | Command::JUMP | Command::FLEET_JUMP | Command::BOARD)
 			&& (!target || target->GetGovernment()->IsEnemy() || activeCommands.Has(Command::FIGHT)))
-		AutoFire(ship, firingCommands, false);
+		AutoFire(ship, firingCommands, false, true);
 
 	const bool mouseTurning = activeCommands.Has(Command::MOUSE_TURNING_HOLD);
 	if(mouseTurning && !ship.IsBoarding() && !ship.IsReversing())

@@ -25,12 +25,17 @@ category "ship"
 	"Superheavy"
 	"Fighter"
 	"Drone"
-
+	"Pocket Light Warship"
+	"Pocket Medium Warship"
+	"Pocket Heavy Warship"
 
 # Ships of these types can be carried by other ships.
 category "bay type"
 	"Drone"
 	"Fighter"
+	"Pocket Light Warship"
+	"Pocket Medium Warship"
+	"Pocket Heavy Warship"
 
 
 # Outfits of these types can be bought and sold via the outfitter.
